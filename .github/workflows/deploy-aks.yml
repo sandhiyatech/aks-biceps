@@ -89,7 +89,7 @@ jobs:
         spec:
           project: default
           source:
-            repoURL: 'https://github.com/your-repo/your-app.git'
+            repoURL: 'https://github.com/azure-devops-cloud/Aks-biceps-cd.git'
             targetRevision: HEAD
             path: .
           destination:
