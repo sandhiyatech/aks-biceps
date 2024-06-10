@@ -4,11 +4,9 @@ param dnsPrefix string
 param nodeCount int
 param nodeVMSize string
 param adminUsername string
-param adminPassword string
+param adminPassword string @secure()
 param clientId string
-param clientSecret string
-param k8sVersion string
-param agentPoolName string
+param clientSecret string @secure()
 
 var sshKeyResourceName = '${clusterName}-sshkey'
 var sshPublicKey = '${adminUsername}@${dnsPrefix}.com'
