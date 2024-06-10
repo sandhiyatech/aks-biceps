@@ -4,9 +4,9 @@ param dnsPrefix string
 param nodeCount int
 param nodeVMSize string
 param adminUsername string
-param adminPassword string @secure()
+param adminPassword string
 param clientId string
-param clientSecret string @secure()
+param clientSecret string
 
 var sshKeyResourceName = '${clusterName}-sshkey'
 var sshPublicKey = '${adminUsername}@${dnsPrefix}.com'
