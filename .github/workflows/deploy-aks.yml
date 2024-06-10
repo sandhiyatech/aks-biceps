@@ -26,7 +26,8 @@ jobs:
 
     - name: Deploy Bicep Template
       run: |
-        az deployment group create --resource-group $RESOURCE_GROUP --template-file main.bicep --parameters parameters.json clientId=$AZURE_CLIENT_ID clientSecret=$AZURE_CLIENT_SECRET
+        #az deployment group create --resource-group $RESOURCE_GROUP --template-file main.bicep --parameters parameters.json clientId=$AZURE_CLIENT_ID clientSecret=$AZURE_CLIENT_SECRET
+        az deployment group create --resource-group $RESOURCE_GROUP --template-file main.bicep --parameters clientId=${{ secrets.AZURE_CLIENT_ID }} clientSecret=${{ secrets.AZURE_CLIENT_SECRET }} location=$(jq -r '.location.value' parameters.json) clusterName=$(jq -r '.clusterName.value' parameters.json) dnsPrefix=$(jq -r '.dnsPrefix.value' parameters.json) nodeCount=$(jq -r '.nodeCount.value' parameters.json) nodeVMSize=$(jq -r '.nodeVMSize.value' parameters.json)
 
     - name: Get AKS credentials
       run: |
