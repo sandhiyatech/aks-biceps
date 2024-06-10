@@ -8,8 +8,6 @@ param clientId string
 param clientSecret string
 param sshKey string
 
-var sshKey = sshKey
-
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
   name: clusterName
   location: location
