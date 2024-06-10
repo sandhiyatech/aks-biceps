@@ -1,20 +1,24 @@
 {
+  "location": {
+    "value": "East US"
+  },
   "clusterName": {
     "value": "myAKSCluster"
   },
   "dnsPrefix": {
-    "value": "myaks"
+    "value": "myakscluster"
+  },
+  "k8sVersion": {
+    "value": "1.23.12"
+  },
+  "nodeCount": {
+    "value": 3
   },
   "agentPoolName": {
     "value": "agentpool"
   },
-  "agentCount": {
-    "value": 3
-  },
-  "agentVMSize": {
+  "nodeVMSize": {
     "value": "Standard_DS2_v2"
-  },
-  "k8sVersion": {
-    "value": "1.23.12"
   }
 }
+
