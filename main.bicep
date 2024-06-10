@@ -4,11 +4,11 @@ param dnsPrefix string
 param nodeCount int
 param nodeVMSize string
 param adminUsername string
-param adminPassword string
 param clientId string
 param clientSecret string
 
 var sshKeyResourceName = '${clusterName}-sshkey'
+
 var sshPublicKey = '${adminUsername}@${dnsPrefix}.com'
 
 resource sshKey 'Microsoft.Compute/sshPublicKeys@2020-06-01' = {
