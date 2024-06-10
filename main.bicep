@@ -1,35 +1,46 @@
-// main.bicep
-
-// Parameters
 param location string = resourceGroup().location
-param clusterName string
-param dnsPrefix string
-param agentPoolName string = 'agentpool'
-param agentCount int = 3
-param agentVMSize string = 'Standard_DS2_v2'
-param k8sVersion string = '1.23.12'  // specify a valid Kubernetes version
+param clusterName string = 'myAKSCluster'
+param dnsPrefix string = 'myakscluster'
+param nodeCount int = 1
+param nodeVMSize string = 'Standard_DS2_v2'
+param clientId string
+param clientSecret string
 
-// AKS Cluster
-resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-09-01' = {
+resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
   name: clusterName
   location: location
   properties: {
     dnsPrefix: dnsPrefix
-    kubernetesVersion: k8sVersion
     agentPoolProfiles: [
       {
-        name: agentPoolName
-        count: agentCount
-        vmSize: agentVMSize
+        name: 'nodepool1'
+        count: nodeCount
+        vmSize: nodeVMSize
+        osType: 'Linux'
+        type: 'VirtualMachineScaleSets'
         mode: 'System'
       }
     ]
+    linuxProfile: {
+      adminUsername: 'azureuser'
+      ssh: {
+        publicKeys: [
+          {
+            keyData: 'your-ssh-public-key'
+          }
+        ]
+      }
+    }
+    servicePrincipalProfile: {
+      clientId: clientId
+      secret: clientSecret
+    }
     enableRBAC: true
     networkProfile: {
       networkPlugin: 'azure'
+      loadBalancerSku: 'standard'
     }
   }
 }
 
-// Output the kubeconfig
-output kubeConfig string = listCredentials(aksCluster.id, '2022-09-01').kubeconfigs[0].value
+output kubeConfigCommand string = 'az aks get-credentials --resource-group ${resourceGroup().name} --name ${clusterName}'
