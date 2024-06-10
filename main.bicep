@@ -22,14 +22,8 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
       }
     ]
     linuxProfile: {
-      adminUsername: 'azureuser'
-      ssh: {
-        publicKeys: [
-          {
-            keyData: 'your-ssh-public-key'
-          }
-        ]
-      }
+      adminUsername: adminUsername
+      adminPassword: adminPassword
     }
     servicePrincipalProfile: {
       clientId: clientId
