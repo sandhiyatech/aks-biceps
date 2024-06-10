@@ -5,6 +5,8 @@ param nodeCount int
 param nodeVMSize string
 param adminUsername string
 param adminPassword string
+param clientId string
+param clientSecret string @secure()
 
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
   name: clusterName
