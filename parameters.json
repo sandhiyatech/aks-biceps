@@ -7,10 +7,7 @@
   },
   "dnsPrefix": {
     "value": "myakscluster"
-  },
-  "k8sVersion": {
-    "value": "1.23.12"
-  },
+  },  
   "nodeCount": {
     "value": 1
   },
@@ -19,10 +16,7 @@
   },
   "adminPassword":{
     "value": "Sanvenky@143"
-  },
-  "agentPoolName": {
-    "value": "agentpool"
-  },
+  },  
   "nodeVMSize": {
     "value": "Standard_DS2_v2"
   }
