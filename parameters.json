@@ -1,6 +1,6 @@
 {
   "location": {
-    "value": "east-us"
+    "value": "eastus"
   },
   "clusterName": {
     "value": "myAKSCluster"
@@ -13,6 +13,12 @@
   },
   "nodeCount": {
     "value": 3
+  },
+  "adminUsername":{
+    "value" : "azureuser"
+  },
+  "adminPassword":{
+    "value": "Sanvenky@143"
   },
   "agentPoolName": {
     "value": "agentpool"
