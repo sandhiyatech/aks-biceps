@@ -7,6 +7,8 @@ param adminUsername string
 param adminPassword string
 param clientId string
 param clientSecret string
+param k8sVersion string
+param agentPoolName string
 
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
   name: clusterName
