@@ -1,11 +1,3 @@
-param location string
-param clusterName string
-param dnsPrefix string
-param nodeCount int
-param nodeVMSize string
-param clientId string
-param clientSecret string
-
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
   name: clusterName
   location: location
