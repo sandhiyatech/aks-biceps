@@ -60,6 +60,7 @@ jobs:
         spec:
           rules:
             http:
+            - host: argo-cd-ingress
               paths:
               - path: /
                 pathType: Prefix
