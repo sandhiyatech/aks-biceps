@@ -1,1 +1,102 @@
-test
+name: Deploy AKS Cluster
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  RESOURCE_GROUP: 'your-resource-group'
+  LOCATION: 'your-location'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy Bicep Template
+      run: |
+        az deployment group create --resource-group $RESOURCE_GROUP --template-file main.bicep --parameters clientId=$AZURE_CLIENT_ID clientSecret=$AZURE_CLIENT_SECRET location=$LOCATION
+
+    - name: Get AKS credentials
+      run: |
+        az aks get-credentials --resource-group $RESOURCE_GROUP --name myAKSCluster
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v1
+
+    - name: Install Argo CD
+      run: |
+        kubectl create namespace argocd
+        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+    - name: Configure Ingress Controller
+      run: |
+        cat <<EOF | kubectl apply -f -
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        metadata:
+          name: argo-cd-ingress
+          namespace: argocd
+          annotations:
+            nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        spec:
+          rules:
+          - host: <your-ingress-host>
+            http:
+              paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: argocd-server
+                    port:
+                      number: 8080
+        EOF
+
+    - name: Create ConfigMap
+      run: |
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: my-config
+          namespace: default
+        data:
+          key: value
+        EOF
+
+    - name: Apply GitOps Application
+      run: |
+        cat <<EOF | kubectl apply -f -
+        apiVersion: argoproj.io/v1alpha1
+        kind: Application
+        metadata:
+          name: my-app
+          namespace: argocd
+        spec:
+          project: default
+          source:
+            repoURL: 'https://github.com/your-repo/your-app.git'
+            targetRevision: HEAD
+            path: .
+          destination:
+            server: 'https://kubernetes.default.svc'
+            namespace: default
+          syncPolicy:
+            automated:
+              prune: true
+              selfHeal: true
+        EOF
