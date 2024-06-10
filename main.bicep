@@ -8,7 +8,6 @@ param clientId string
 param clientSecret string
 
 var sshKeyResourceName = '${clusterName}-sshkey'
-
 var sshPublicKey = '${adminUsername}@${dnsPrefix}.com'
 
 resource sshKey 'Microsoft.Compute/sshPublicKeys@2020-06-01' = {
