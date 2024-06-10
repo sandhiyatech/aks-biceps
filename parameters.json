@@ -1,6 +1,6 @@
 {
   "location": {
-    "value": "East US"
+    "value": "east-us"
   },
   "clusterName": {
     "value": "myAKSCluster"
