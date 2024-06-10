@@ -8,7 +8,6 @@ env:
   AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-  SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
   RESOURCE_GROUP: 'test-bicep'
   LOCATION: 'southindia'
 
@@ -28,7 +27,7 @@ jobs:
     - name: Deploy Bicep Template
       run: |
         
-        az deployment group create --resource-group $RESOURCE_GROUP --template-file main.bicep --parameters parameters.json --parameters clientId=$AZURE_CLIENT_ID clientSecret=$AZURE_CLIENT_SECRET sshKey=$SSH_PUBLIC_KEY 
+        az deployment group create --resource-group $RESOURCE_GROUP --template-file main.bicep --parameters parameters.json --parameters clientId=$AZURE_CLIENT_ID clientSecret=$AZURE_CLIENT_SECRET 
 
     - name: Get AKS credentials
       run: |
