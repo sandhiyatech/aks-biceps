@@ -13,9 +13,6 @@
   },
   "adminUsername":{
     "value" : "azureuser"
-  },
-  "adminPassword":{
-    "value": "Sanvenky@143"
   },  
   "nodeVMSize": {
     "value": "Standard_DS2_v2"
