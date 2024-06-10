@@ -6,17 +6,9 @@ param nodeVMSize string
 param adminUsername string
 param clientId string
 param clientSecret string
+param sshKey string
 
-var sshKeyResourceName = '${clusterName}-sshkey'
-var sshPublicKey = '${adminUsername}@${dnsPrefix}.com'
-
-resource sshKey 'Microsoft.Compute/sshPublicKeys@2020-06-01' = {
-  name: sshKeyResourceName
-  location: location
-  properties: {
-    publicKey: sshPublicKey
-  }
-}
+var sshKey = sshKey
 
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
   name: clusterName
@@ -38,7 +30,7 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
       ssh: {
         publicKeys: [
           {
-            keyData: sshKey.properties.publicKey
+            keyData: sshKey
           }
         ]
       }
