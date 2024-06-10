@@ -1,8 +1,8 @@
-param location string = resourceGroup().location
-param clusterName string = 'myAKSCluster'
-param dnsPrefix string = 'myakscluster'
-param nodeCount int = 1
-param nodeVMSize string = 'Standard_DS2_v2'
+param location string
+param clusterName string
+param dnsPrefix string
+param nodeCount int
+param nodeVMSize string
 param clientId string
 param clientSecret string
 
