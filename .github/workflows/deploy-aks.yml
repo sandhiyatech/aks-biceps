@@ -38,7 +38,12 @@ jobs:
 
     - name: Install Argo CD
       run: |
-        kubectl create namespace argocd
+        if [ "${{ github.event_name }}" = "push" ]; then
+          # Create namespace
+          kubectl create namespace argocd || true
+        elif [ "${{ github.event_name }}" = "delete" ]; then
+          # Delete namespace
+          kubectl delete namespace argocd || true
         kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
     - name: Configure Ingress Controller
