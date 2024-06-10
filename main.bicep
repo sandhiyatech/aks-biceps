@@ -10,6 +10,17 @@ param clientSecret string
 param k8sVersion string
 param agentPoolName string
 
+var sshKeyResourceName = '${clusterName}-sshkey'
+var sshPublicKey = '${adminUsername}@${dnsPrefix}.com'
+
+resource sshKey 'Microsoft.Compute/sshPublicKeys@2020-06-01' = {
+  name: sshKeyResourceName
+  location: location
+  properties: {
+    publicKey: sshPublicKey
+  }
+}
+
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
   name: clusterName
   location: location
@@ -27,7 +38,13 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2023-01-01' = {
     ]
     linuxProfile: {
       adminUsername: adminUsername
-      adminPassword: adminPassword
+      ssh: {
+        publicKeys: [
+          {
+            keyData: sshKey.properties.publicKey
+          }
+        ]
+      }
     }
     servicePrincipalProfile: {
       clientId: clientId
