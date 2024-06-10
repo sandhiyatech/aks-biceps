@@ -1,6 +1,6 @@
 {
   "location": {
-    "value": "eastus"
+    "value": "southindia"
   },
   "clusterName": {
     "value": "myAKSCluster"
