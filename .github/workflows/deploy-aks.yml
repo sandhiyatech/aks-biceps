@@ -59,16 +59,16 @@ jobs:
             nginx.ingress.kubernetes.io/ssl-redirect: "false"
         spec:
           rules:
-            http:
-            - host: argo-cd-ingress
-              paths:
-              - path: /
-                pathType: Prefix
-                backend:
-                  service:
-                    name: argocd-server
-                    port:
-                      number: 8080
+            - host: your-hostname.com
+              http:
+                paths:
+                  - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: argocd-server
+                      port:
+                        number: 8080
         EOF
 
     - name: Create ConfigMap
