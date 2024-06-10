@@ -7,8 +7,6 @@ param adminUsername string
 param adminPassword string
 param clientId string
 param clientSecret string
-param k8sVersion string
-param agentPoolName string
 
 var sshKeyResourceName = '${clusterName}-sshkey'
 var sshPublicKey = '${adminUsername}@${dnsPrefix}.com'
