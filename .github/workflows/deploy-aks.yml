@@ -23,6 +23,7 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+        subscriptionId: 793dab7f-b604-40db-9867-bf7975bedc72
         #AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         #AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         #AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
